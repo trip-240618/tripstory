@@ -13,11 +13,21 @@
 
 **지금 바로 트립스토리에서 간편하게 여행을 시작해보세요! 🚀✨**
 
-## 🔗 배포 링크
-- [앱스토어 배포 링크](https://apps.apple.com/kr/app/%ED%8A%B8%EB%A6%BD%EC%8A%A4%ED%86%A0%EB%A6%AC/id6529530493)
-- 플레이스토어 배포 준비중
-  
-## 🌟 주요 기능
+## 목차
+1. [주요 기능](#주요-기능)
+2. [배포 링크](#배포-링크)
+3. [프로젝트 아키텍처](#프로젝트-아키텍처)
+4. [기술 스택](#기술-스택)
+5. [라이브러리](#라이브러리)
+6. [폴더 구조](#폴더-구조)
+
+   
+## 🚧 개발 기간
+
+> 2024.09 ~ 2024.12.
+
+## 주요 기능
+
 ### 1. 메인 홈
 
 <img src="https://github.com/user-attachments/assets/db4727cf-db4a-44b6-8d07-0d493dbde5ce" width="100%">
@@ -34,16 +44,17 @@
 ### 5. 여행기록
 <img src="https://github.com/user-attachments/assets/bc2659bb-5293-4204-841a-440396b47f56" width="100%">
 
-## ▶️ 플로우 차트
-<img src="https://github.com/user-attachments/assets/c027e5f3-ddbe-49c2-8ac1-8f0aa8d2ba9a" width="100%">
+## 배포 링크
+- [앱스토어 배포 링크](https://apps.apple.com/kr/app/%ED%8A%B8%EB%A6%BD%EC%8A%A4%ED%86%A0%EB%A6%AC/id6529530493)
+- 플레이스토어 배포 준비중
 
-## 🎨 프로젝트 아키텍처
+## 프로젝트 아키텍처
 <img src="https://github.com/user-attachments/assets/c570f853-a203-43c4-a1b5-32b0f698223f" width="100%">
 
-## 🛠 기술 스택
+## 기술 스택
 <img class="badge" src="https://img.shields.io/badge/Flutter-3.24.0-blue"> <img class="badge" src="https://img.shields.io/badge/dart-3.5.0-blue">
 
-## 📚 라이브러리
+## 라이브러리
 | 라이브러리                  | Version     | 
 | ---------------------------- | :-----:  |
 | kakao_flutter_sdk            | `1.9.3`  |
@@ -62,7 +73,7 @@
 | google_maps_cluster_manager_2| `3.2.0` |
 | flutter_cache_manager        | `3.4.1` |
 
-## 🗂 폴더 구조
+## 폴더 구조
 ```
 lib
 ├── App
