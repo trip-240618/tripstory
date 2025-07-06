@@ -1,108 +1,120 @@
 <img src="https://github.com/user-attachments/assets/37770302-aa61-4121-addc-3066043b45e9" width="100%">
 
-# 트립스토리 (TirpStory)
-> “여행 계획 세우는 거,,, 왜 이렇게 힘든 거야!!!”
-> 
-> “일정 짜려고 하니까 어디부터 시작해야 할지 모르겠고,,, 머리만 아프네,,,”
-> 
-> “모두가 만족할 만한 일정은 어떻게 만들지?”
+# ✈️ 트립스토리 - 여행 계획 & 기록 앱
 
 
-트립스토리라면 이런 고민 한 방에 해결!
-내 여행 스타일에 맞는 템플릿, 친구들과 함께 만드는 일정 그리고 추억을 간직할 기록 관리까지!
+**트립스토리**는 여행의 계획부터 기록까지 여행의 전 과정을 함께하는 앱입니다.  
+여행 성향(MBTI J형, P형)에 맞춘 템플릿으로 일정 계획을 쉽게 세우고,  
+여행 중에는 실시간으로 일정을 관리하며,  
+여행 후에는 사진과 함께 추억을 기록할 수 있습니다.
 
-**지금 바로 트립스토리에서 간편하게 여행을 시작해보세요! 🚀✨**
+---
 
-## 목차
-1. [주요 기능](#주요-기능)
-2. [배포 링크](#배포-링크)
-3. [프로젝트 아키텍처](#프로젝트-아키텍처)
-4. [기술 스택](#기술-스택)
-5. [라이브러리](#라이브러리)
-6. [폴더 구조](#폴더-구조)
+## 🔗 배포 링크
+- 앱스토어 배포 링크: [트립스토리 App Store](https://apps.apple.com/kr/app/%ED%8A%B8%EB%A6%BD%EC%8A%A4%ED%86%A0%EB%A6%AC/id6529530493)
 
-   
-## 🚧 개발 기간
+---
 
-> 2024.09 ~ 2024.12.
+## 🎨 프로젝트 아키텍처
+Flutter로 구현된 본 프로젝트는 **Clean Architecture**를 기반으로 GetX를 활용한 MVVM 스타일의 구조를 따릅니다.
+명확한 관심사 분리와 높은 유지보수성, 테스트 용이성을 목표로 설계되었습니다.
 
-## 주요 기능
+---
 
-### 1. 메인 홈
+## 🛠️ 기술 스택
 
-<img src="https://github.com/user-attachments/assets/db4727cf-db4a-44b6-8d07-0d493dbde5ce" width="100%">
+| Layer           | 기술/라이브러리          |
+|-----------------|---------------------------|
+| Framework       | Flutter (3.29.2)           |
+| Language        | Dart                      |
+| Architecture    | MVVM + Clean Architecture |
+| 상태관리          | GetX                      |
+| 네트워킹        | Retrofit (Dio 기반)          |
 
-### 2. 여행일정 (Mbti - J형)
-<img src="https://github.com/user-attachments/assets/64ee9644-df99-4e77-acd8-fea277d9dcdb" width="100%">
+---
 
-### 3. 여행일정 (Mbti - P형)
-<img src="https://github.com/user-attachments/assets/6e97c72a-3a33-410b-b704-4cf522c838ae" width="100%">
+## ⚙️  클린 아키텍처 구성
+### 1. Domain Layer
+- **Entities**  
+  앱의 핵심 비즈니스 모델을 정의합니다.  
+  (ex. `TripRoomEntity`, `TripMemberEntity`)
 
-### 4. 보관함
-<img src="https://github.com/user-attachments/assets/07aa0d6f-3306-4117-bd48-1f6a3ea69dea" width="100%">
+- **Repositories (Interfaces)**  
+  데이터 접근에 대한 추상화를 제공합니다.  
+  (ex. `TripRepository`)
 
-### 5. 여행기록
-<img src="https://github.com/user-attachments/assets/bc2659bb-5293-4204-841a-440396b47f56" width="100%">
+- **UseCases**  
+  하나의 기능 단위를 담당하며 비즈니스 로직을 실행합니다.  
+  (ex. `CreateTripRoomUseCase`)
+### 2. Data Layer
+- **RepositoryImpl**  
+  Domain에서 정의한 Repository를 실제 구현합니다.  
+  Remote DataSource와 통신하고 Mapper를 통해 데이터를 Entity로 변환해 전달합니다.  
+  (ex. `TripRepositoryImpl`)
+  
+- **DataSource (Remote/Local)**  
+  원격 데이터 소스와 연결하여 REST API를 호출합니다.  
+  (ex. `TripDataSource`)
+  
+- **DTO → Entity 변환**  
+  외부 데이터와 Domain Entity 간 변환을 담당합니다.  
+  (ex. `TripRoomMapper`, `TripRoomCreateMapper`)
+  
+- **Model (DTO)**  
+  API 통신에 사용하는 데이터 객체입니다.  
+  (ex. `TripRoomResponse`, `TripRoomCreateRequest`)
+### 3. Presentation Layer
+- **View (Screen)**  
+  실제 화면(UI)을 구성합니다.
+- **Controller**  
+  화면의 상태 관리와 UI 로직을 담당하며 UseCase를 호출해 데이터를 가져오고 UI에 반영합니다.  
+  (ex. `TripRoomsCreateController`)
+- **Binding**  
+  GetX를 통해 Controller와 필요한 객체들의 의존성을 주입합니다.  
+  (ex. `TripRoomsCreateBinding`)
+- **Model (State)**  
+  화면의 상태를 나타내는 데이터 모델입니다.  
+  (ex. `TripRoomsState`, `TripRoomCreateState`)
+- **Enum**  
+  Presentation에서 UI 상태나 타입 구분에 사용됩니다.
+---
 
-## 배포 링크
-- [앱스토어 배포 링크](https://apps.apple.com/kr/app/%ED%8A%B8%EB%A6%BD%EC%8A%A4%ED%86%A0%EB%A6%AC/id6529530493)
-- 플레이스토어 배포 준비중
-
-## 프로젝트 아키텍처
-<img src="https://github.com/user-attachments/assets/c570f853-a203-43c4-a1b5-32b0f698223f" width="100%">
-
-## 기술 스택
-<img class="badge" src="https://img.shields.io/badge/Flutter-3.24.0-blue"> <img class="badge" src="https://img.shields.io/badge/dart-3.5.0-blue">
-
-## 라이브러리
-| 라이브러리                  | Version     | 
-| ---------------------------- | :-----:  |
-| kakao_flutter_sdk            | `1.9.3`  |
-| sign_in_with_apple           | `6.1.1`  |
-| google_sign_in               | `6.2.1`  |
-| stomp_dart_client            | `2.0.0`  |
-| flutter_jailbreak_detection  | `1.10.0` |
-| get                          | `4.6.6`  |
-| firebase_messaging           | `15.0.3` |
-| flutter_local_notifications  | `17.2.1+1` |
-| google_maps_flutter          | `2.6.0`  |
-| google_places_flutter        | `2.0.9` |
-| flutter_quill                | `10.4.5` |
-| flutter_quill_extensions     | `10.4.5` |
-| connectivity_plus            | `6.1.1` |
-| google_maps_cluster_manager_2| `3.2.0` |
-| flutter_cache_manager        | `3.4.1` |
-
-## 폴더 구조
+## 🗂️ 디렉토리 구조 예시
 ```
-lib
-├── App
-│   ├── API
-│   ├── Config
-│   ├── Notification
-│   ├── Permission
-│   └── Sns
-├── Component
-│   ├── Button
-│   ├── Container
-│   ├── Dialog
-│   ├── Empty
-│   ├── History
-│   ├── Loading
-│   ├── TextForm
-│   └── Toast
-├── Controller
-│   └── State
-├── Model
-├── Screen
-│   ├── Login
-│   ├── Main
-│   ├── MyPage
-│   └── Trip
-└──  Util
-     ├── Color
-     ├── CustomMarker
-     ├── FileUtils
-     ├── Font
-     └── HistoryClusterItem
+lib/
+  ├── common/
+  ├── core/
+  │     ├── constants/
+  │     ├── errors/
+  │     ├── logger/
+  │     ├── network/
+  │     ├── permission/
+  │     ├── service/
+  │     └── theme/
+  ├── data/
+  │     ├── datasources/
+  │     │     ├── local/
+  │     │     └── remote/
+  │     ├── models/ 
+  │     └── repositories/
+  ├── domain/
+  │     ├── usecases/ 
+  │     ├── entities/
+  │     └── repositories/
+  ├── presentation/
+  │     ├── home/
+  │     │     ├── controller/
+  │     │     ├── enums/
+  │     │     ├── views/
+  │     │     └── widgets/
+  │     ├── trip/
+  │     │     ├── controller/
+  │     │     ├── enums/
+  │     │     ├── views/
+  │     │     └── widgets/
+  │     ├── ...
+  ├── utils/
+  │     ├── helpers/
+  │     └── extensions/
+  └── main.dart
 ```
